@@ -27,6 +27,7 @@ def parser(record):
 def main():
     run_ts,run_date=get_python_datetime()
     record = currencyapi(run_date, "251803cdbb994fe2813635578dacbd0a")
+    print(record)
     currency_details_usd = parser(record)
     pd.set_option('display.max_colwidth', -1)
     print(currency_details_usd)
@@ -53,14 +54,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-#
-# CREATE TABLE `currency` (
-#   `id` int(11) NOT NULL AUTO_INCREMENT,
-#   `date` int(11) DEFAULT NULL,
-#   `base_currency` varchar(10) DEFAULT NULL,
-#   `target_currency` varchar(10) DEFAULT NULL,
-#   `rates` float DEFAULT NULL,
-#   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-#   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-#   PRIMARY KEY (`id`)
-# ) ENGINE=InnoDB AUTO_INCREMENT=685 DEFAULT CHARSET=latin1
