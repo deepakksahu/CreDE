@@ -19,10 +19,18 @@ IMAGE_CONFIG = Variable.get('cred_images_config', deserialize_json=True)
 CONFIG = Variable.get('cred_de_pipeline_conf',
                       deserialize_json=True)
 
+config=json.dumps(CONFIG)
+if config['FREQUENCY']=='hourly':
+    interval='0 * * * *'
+elif config['FREQUENCY']=='daily':
+    interval='0 0 * * *'
+else:
+    print("Not supported frequency")
+
 with DAG(
         'data-pipeline',
         default_args=DEFAULT_ARGS,
-        schedule_interval='0 * * * *' # Making it hourly job
+        schedule_interval=interval
 ) as dag:
     KubernetesPodOperator(
         namespace='Cred_Dataengineering',
