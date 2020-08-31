@@ -21,7 +21,7 @@ def main():
     separator = config['CSV_DELIM']
     s3_bucket = config["S3_BUCKET"]
     output_folder_location = config['OUTPUT_FOLDER_LOCATION']
-    frequency = config['FREQUENCY']
+    backfill_hour = config['TIME_RANGE_HOURS']
     table_specs = config['TABLE_SPEC']
 
     logger.info('===============================Starting data pipeline===============================')
@@ -41,4 +41,5 @@ def main():
     mysql.close()
     logger.info('===============================MySQL connection Closed===============================')
 
-main()
+if __name__ == '__main__':
+    main()

@@ -51,9 +51,32 @@ config = json.dumps({
   "CSV_DELIM": ","
 })
 ```
+
+##### Config to the backfill Script
+```sh
+backfill_config = json.dumps({
+	"MYSQL_HOST": "localhost",
+	"MYSQL_DB": "cred",
+	"MYSQL_USERNAME": "root",
+	"MYSQL_PASSWORD": "password",
+	"TABLE_SPEC": [{
+		"TABLE_NAME": "currency",
+		"SELECT_COLS": "'rates','created_at'",
+		"CDC_COLUMNS": "created_at"
+	}],
+	"TIME_RANGE_HOURS": 12,
+	"S3_BUCKET": "everythingtest",
+	"OUTPUT_FOLDER_LOCATION": "cred",
+	"CSV_DELIM": ","
+})
+```
 ##### Command to create pipeline
 ```python
 python main.py --config '{ "MYSQL_HOST": "localhost", "MYSQL_DB": "cred", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ { "TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at", "STRATEGY": "incremental"}, { "TABLE_NAME": "dept", "SELECT_COLS": "'deptno','dname'", "CDC_COLUMNS": "dname", "STRATEGY": "fullload" } ],"FREQUENCY":"daily","S3_BUCKET": "everythingtest","OUTPUT_FOLDER_LOCATION":"cred", "CSV_DELIM": "," }'
+```
+##### Command to backfill
+```python
+python backfill.py --backfill_config '{ "MYSQL_HOST": "localhost", "MYSQL_DB": "cred", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ { "TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at" } ], "TIME_RANGE_HOURS": 12, "S3_BUCKET": "everythingtest", "OUTPUT_FOLDER_LOCATION": "cred", "CSV_DELIM": "," }'
 ```
 
 ##### Output
