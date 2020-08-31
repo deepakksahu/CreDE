@@ -20,10 +20,9 @@ logger = get_module_logger(__name__)
 # Externalised configuration, to support multiple tables
 # Frequency: Configurable (ex: hourly)
 # CDC Columns: Multiple, Configurable (ex: created_time, updated_time)--Single
-
+# Time Range: Configurable (ex: 12 hours == fetches data for the last 12 hours)
 
 # ToDO
-# Time Range: Configurable (ex: 12 hours == fetches data for the last 12 hours)
 # Must have:
 # Daemon process that allows clean start and shutdown (and not kill -9 :)
 # Support for sliding window based extractions
@@ -53,7 +52,6 @@ config = """{
 "CSV_DELIM":","
 }"""
 
-backfill_config = """{"TABLE_SPEC": [{"TABLE_NAME":"","SELECT_COLS":"","CDC_COLUMNS": ''}],"TIME_RANGE_HOURS":12 }"""
 
 
 def main():
@@ -88,4 +86,5 @@ def main():
     mysql.close()
     logger.info('===============================MySQL connection Closed===============================')
 
-main()
+if __name__ == '__main__':
+    main()
