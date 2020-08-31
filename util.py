@@ -18,8 +18,7 @@ class UtilClass(object):
             user=config["MYSQL_USERNAME"],
             password=config["MYSQL_PASSWORD"],
             cursorclass=pymysql.cursors.DictCursor,
-            connect_timeout= self.CONNECT_TIMEOUT_SECONDS,
-            db=config["MYSQL_DB"])
+            connect_timeout= self.CONNECT_TIMEOUT_SECONDS)
 
 
     def mysql_connection(self,connection):
@@ -66,17 +65,17 @@ class UtilClass(object):
         and returns all the tables with their data"""
         try:
             if table_spec["STRATEGY"] == 'fullload':
-                query = 'select {} from {}'.format(table_spec["SELECT_COLS"], table_spec["TABLE_NAME"])
+                query = 'select {} from {}.{}'.format(table_spec["SELECT_COLS"], table_spec["MYSQL_DB"],table_spec["TABLE_NAME"])
                 logger.debug(query)
                 result = self._execute_mysql_query(query, mysql_cursor)
             elif table_spec["STRATEGY"] == 'incremental' and frequency == 'hourly':
-                query = 'select {} from {} where {} between now() - interval {} hour AND NOW()'.format(
-                    table_spec["SELECT_COLS"], table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], 1)
+                query = 'select {} from {}.{} where {} between now() - interval {} hour AND NOW()'.format(
+                    table_spec["SELECT_COLS"],table_spec["MYSQL_DB"], table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], 1)
                 logger.debug(query)
                 result = self._execute_mysql_query(query, mysql_cursor)
             elif table_spec["STRATEGY"] == 'incremental' and frequency == 'daily':
-                query = 'select {} from {} where {} between now() - interval {} day AND NOW()'.format(
-                    table_spec["SELECT_COLS"], table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], 1)
+                query = 'select {} from {}.{} where {} between now() - interval {} day AND NOW()'.format(
+                    table_spec["SELECT_COLS"], table_spec["MYSQL_DB"],table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], 1)
                 logger.debug(query)
                 result = self._execute_mysql_query(query, mysql_cursor)
             return result
@@ -88,8 +87,8 @@ class UtilClass(object):
 
     def backfill(self,mysql_cursor,hour,table_spec):
         try:
-            query = 'select {} from {} where {} between now() - interval {} hour AND NOW()'.format(
-                table_spec["SELECT_COLS"], table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], hour)
+            query = 'select {} from {}.{} where {} between now() - interval {} hour AND NOW()'.format(
+                table_spec["SELECT_COLS"], table_spec["MYSQL_DB"],table_spec["TABLE_NAME"], table_spec["CDC_COLUMNS"], hour)
             logger.debug(query)
             result = self._execute_mysql_query(query, mysql_cursor)
             return result
