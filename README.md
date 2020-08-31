@@ -16,6 +16,15 @@ A Data Engineering assignment
    for any call it takes hour to look back and take the delta data and  
    create a csv out of it.
 
+**Some of the columns in mysql have JSON in it, which needs to be split  
+into multiple keys as per the need. The pipeline should have a
+transformation layer to handle such scenario**
+
+For the above Question we have to get the data in a DF and parse it  
+accordingly. **data_ingestor.py** is doing one such parsing of the data.  
+Though this has been used to populate the source table.
+
+
 ##### Install pip requirements
 ```sh
 pip install - r requirements.txt
