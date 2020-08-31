@@ -1,6 +1,30 @@
 # CreDE
 A Data Engineering assignment
 
+**Approach:**
+1. Create a util class which will consist of all the functions.
+2. In the **main.py** create an object for the class and use the same
+   for any call.
+3. Modularise the code according to their functioning.
+4. Add logging for better debugging.
+5. Add required comments to increase the readability of the code.
+6. Add the docker file to containerize the solution.
+7. Add all the dependency in requirements.txt.
+8. Write the DF to s3.
+9. Add the airflow DAG consider we have k8s to spin pods.
+10.In the **backfill.py** create an object for the class and use the same
+   for any call it takes hour to look back and take the delta data and  
+   create a csv out of it.
+
+**Some of the columns in mysql have JSON in it, which needs to be split  
+into multiple keys as per the need. The pipeline should have a
+transformation layer to handle such scenario**
+
+For the above Question we have to get the data in a DF and parse it  
+accordingly. **data_ingestor.py** is doing one such parsing of the data.  
+Though this has been used to populate the source table.
+
+
 ##### Install pip requirements
 ```sh
 pip install - r requirements.txt
