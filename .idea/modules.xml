@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CreDE.iml" filepath="$PROJECT_DIR$/.idea/CreDE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Crosslend_sol/.idea/Crosslend_sol.iml" filepath="$PROJECT_DIR$/../Crosslend_sol/.idea/Crosslend_sol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../coding-practice/.idea/coding-practice.iml" filepath="$PROJECT_DIR$/../coding-practice/.idea/coding-practice.iml" />
     </modules>
   </component>
 </project>

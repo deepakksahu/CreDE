@@ -4,6 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.6 (CreDE)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="coding-practice" />
+    <orderEntry type="module" module-name="coding-practice" />
+    <orderEntry type="module" module-name="Crosslend_sol" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Nosetests" />
