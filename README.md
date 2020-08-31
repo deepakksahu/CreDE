@@ -17,8 +17,7 @@ A Data Engineering assignment
    create a csv out of it.
 
 **Some of the columns in mysql have JSON in it, which needs to be split  
-into multiple keys as per the need. The pipeline should have a
-transformation layer to handle such scenario**
+into multiple keys as per the need.**
 
 For the above Question we have to get the data in a DF and parse it  
 accordingly. **data_ingestor.py** is doing one such parsing of the data.  
@@ -98,6 +97,10 @@ python main.py --config '{ "MYSQL_HOST": "localhost",  "MYSQL_USERNAME": "root",
 ##### Command to backfill
 ```python
 python backfill.py --backfill_config '{ "MYSQL_HOST": "localhost", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ {  "MYSQL_DB": "cred","TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at" } ], "TIME_RANGE_HOURS": 12, "S3_BUCKET": "everythingtest", "OUTPUT_FOLDER_LOCATION": "cred", "CSV_DELIM": "," }'
+```
+##### To Stop the running process
+```python
+python proc.py stop
 ```
 
 ##### Output
