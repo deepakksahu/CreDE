@@ -19,26 +19,21 @@ CREATE TABLE `currency` (
 ) ENGINE=InnoDB AUTO_INCREMENT=685 DEFAULT CHARSET=latin1
 ```
 ##### common config which is parameter to the pipeline script
-```
+```sh
 config = json.dumps({
   "MYSQL_HOST": "localhost",
-  "MYSQL_DB": "cred",
   "MYSQL_USERNAME": "root",
   "MYSQL_PASSWORD": "password",
   "TABLE_SPEC": [
     {
-  "MYSQL_HOST": "localhost",
-  "MYSQL_DB": "cred",
-  "MYSQL_USERNAME": "root",
-  "MYSQL_PASSWORD": "password",
-  "TABLE_SPEC": [
-    {
+      "MYSQL_DB": "cred",
       "TABLE_NAME": "currency",
       "SELECT_COLS": "'rates','created_at'",
       "CDC_COLUMNS": "created_at",
       "STRATEGY": "incremental"
     },
     {
+      "MYSQL_DB": "cred",
       "TABLE_NAME": "dept",
       "SELECT_COLS": "'deptno','dname'",
       "CDC_COLUMNS": "dname",
@@ -55,28 +50,30 @@ config = json.dumps({
 ##### Config to the backfill Script
 ```sh
 backfill_config = json.dumps({
-	"MYSQL_HOST": "localhost",
-	"MYSQL_DB": "cred",
-	"MYSQL_USERNAME": "root",
-	"MYSQL_PASSWORD": "password",
-	"TABLE_SPEC": [{
-		"TABLE_NAME": "currency",
-		"SELECT_COLS": "'rates','created_at'",
-		"CDC_COLUMNS": "created_at"
-	}],
-	"TIME_RANGE_HOURS": 12,
-	"S3_BUCKET": "everythingtest",
-	"OUTPUT_FOLDER_LOCATION": "cred",
-	"CSV_DELIM": ","
+  "MYSQL_HOST": "localhost",
+  "MYSQL_USERNAME": "root",
+  "MYSQL_PASSWORD": "password",
+  "TABLE_SPEC": [
+    {
+      "MYSQL_DB": "cred",
+      "TABLE_NAME": "currency",
+      "SELECT_COLS": "'rates','created_at'",
+      "CDC_COLUMNS": "created_at"
+    }
+  ],
+  "TIME_RANGE_HOURS": 12,
+  "S3_BUCKET": "everythingtest",
+  "OUTPUT_FOLDER_LOCATION": "cred",
+  "CSV_DELIM": ","
 })
 ```
 ##### Command to create pipeline
 ```python
-python main.py --config '{ "MYSQL_HOST": "localhost", "MYSQL_DB": "cred", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ { "TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at", "STRATEGY": "incremental"}, { "TABLE_NAME": "dept", "SELECT_COLS": "'deptno','dname'", "CDC_COLUMNS": "dname", "STRATEGY": "fullload" } ],"FREQUENCY":"daily","S3_BUCKET": "everythingtest","OUTPUT_FOLDER_LOCATION":"cred", "CSV_DELIM": "," }'
+python main.py --config '{ "MYSQL_HOST": "localhost",  "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ { "MYSQL_DB": "cred","TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at", "STRATEGY": "incremental"}, {"MYSQL_DB": "cred", "TABLE_NAME": "dept", "SELECT_COLS": "'deptno','dname'", "CDC_COLUMNS": "dname", "STRATEGY": "fullload" } ],"FREQUENCY":"daily","S3_BUCKET": "everythingtest","OUTPUT_FOLDER_LOCATION":"cred", "CSV_DELIM": "," }'
 ```
 ##### Command to backfill
 ```python
-python backfill.py --backfill_config '{ "MYSQL_HOST": "localhost", "MYSQL_DB": "cred", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ { "TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at" } ], "TIME_RANGE_HOURS": 12, "S3_BUCKET": "everythingtest", "OUTPUT_FOLDER_LOCATION": "cred", "CSV_DELIM": "," }'
+python backfill.py --backfill_config '{ "MYSQL_HOST": "localhost", "MYSQL_USERNAME": "root", "MYSQL_PASSWORD": "password", "TABLE_SPEC": [ {  "MYSQL_DB": "cred","TABLE_NAME": "currency", "SELECT_COLS": "'rates','created_at'", "CDC_COLUMNS": "created_at" } ], "TIME_RANGE_HOURS": 12, "S3_BUCKET": "everythingtest", "OUTPUT_FOLDER_LOCATION": "cred", "CSV_DELIM": "," }'
 ```
 
 ##### Output
